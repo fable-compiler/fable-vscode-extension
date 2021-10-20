@@ -1,0 +1,49 @@
+{
+  "name": "fable-vscode-extension",
+  "displayName": "Highlight HTML/SQL templates in F#",
+  "description": "Syntax highlighting for template strings in F#",
+  "icon": "fable_logo.png",
+  "version": "0.0.0",
+  "publisher": "alfonsogarciacaro",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/fable-compiler/fable-vscode-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fable-compiler/fable-vscode-extension/issues"
+  },
+  "engines": {
+    "vscode": "^1.43.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:fable.sayHello"
+  ],
+  "main": "./dist/main.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fable.sayHello",
+        "title": "Say Hello from Fable!"
+      }
+    ]
+  },
+  "scripts": {
+    "install": "dotnet tool restore",
+    "build": "dotnet fable src -o build --run npm run esbuild",
+    "start": "dotnet fable watch src -s -o build --run npm run esbuild-watch",
+    "esbuild-base": "esbuild ./build/Main.js --bundle --outfile=dist/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",    
+    "prepack": "npm run build",
+    "pack": "vsce package"
+  },
+  "dependencies": {
+    "ionide-vscode-helpers": "ionide/ionide-vscode-helpers"
+  },
+  "devDependencies": {
+    "esbuild": "^0.13.8"
+  }
+}
